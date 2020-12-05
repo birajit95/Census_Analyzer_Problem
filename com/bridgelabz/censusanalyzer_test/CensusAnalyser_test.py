@@ -58,3 +58,8 @@ def test_givenStateCodeFile_WhenIncorrectFileType_ShouldRaiseCensusAnalyserExcep
 def test_givenStateCodeCSVFile_WhenWrongDelimiter_ShouldRaiseCensusAnalyserException(stateCensusInstance):
     with pytest.raises(CensusAnalyserException):
         stateCensusInstance.loadStateCodeData(STATE_CODE_ACTUAL_PATH, delimiter=",")
+
+
+def test_givenStateCodeCSVFile_WhenWrongHeaderFound_ShouldRaiseCensusAnalyserException(stateCensusInstance):
+    with pytest.raises(CensusAnalyserException):
+        stateCensusInstance.loadStateCodeData(STATE_CODE_ACTUAL_PATH, header=WRONG_HEADER)

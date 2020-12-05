@@ -34,6 +34,8 @@ class CensusAnalyser:
 
         if header is None:
             header = repr(StateCodeCSVHeader()).split(',')
+        elif header != repr(StateCodeCSVHeader()).split(','):
+            raise CensusAnalyserException(ExceptionType.INCORRECT_HEADER_EXCEPTION.value)
         if not path.find(".csv"):
             raise CensusAnalyserException(ExceptionType.INCORRECT_FILE_TYPE_EXCEPTION.value)
         if delimiter != "\t":
@@ -44,6 +46,7 @@ class CensusAnalyser:
             raise CensusAnalyserException(ExceptionType.WRONG_FILE_PATH_EXCEPTION.value)
 
     def getStateCodeRecordCount(self):
+        """returns length of the data set"""
         return len(self.stateCodaData)
 
 
