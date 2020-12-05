@@ -42,3 +42,8 @@ def test_givenStateCensusCSVFile_WhenWrongHeaderFound_ShouldRaiseCensusAnalyserE
 def test_givenStateCodeCSVFile_WhenCounted_ShouldReturnRecordCount(stateCensusInstance):
     stateCensusInstance.loadStateCodeData(STATE_CODE_ACTUAL_PATH)
     assert stateCensusInstance.getStateCodeRecordCount() == 37
+
+
+def test_givenStateCodeCSVFile_WhenWrongPath_ShouldRaiseCensusAnalyserException(stateCensusInstance):
+    with pytest.raises(CensusAnalyserException):
+        stateCensusInstance.loadStateCodeData(WRONG_PATH)
