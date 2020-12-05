@@ -36,7 +36,8 @@ class CensusAnalyser:
             header = repr(StateCodeCSVHeader()).split(',')
         self.stateCodaData = pd.read_csv(path, sep=delimiter, skiprows=[0], names=header)
 
-
+    def getStateCodeRecordCount(self):
+        return len(self.stateCodaData)
 
 
 
@@ -44,6 +45,7 @@ if __name__ == '__main__':
     STATE_CENSUS_PATH = r"..\Resource\stateCensusData.csv"
     STATE_CODE_PATH = r"..\Resource\stateCodeData.csv"
     analyser = CensusAnalyser()
-    # analyser.loadStateCensusData(STATE_CENSUS_PATH)
+    analyser.loadStateCensusData(STATE_CENSUS_PATH)
     analyser.loadStateCodeData(STATE_CODE_PATH)
-    # print(analyser.getStateCensusRecordCount())
+    print(analyser.getStateCensusRecordCount())
+    print(analyser.getStateCodeRecordCount())
