@@ -18,7 +18,7 @@ class CensusAnalyser:
             raise CensusAnalyserException(ExceptionType.INCORRECT_HEADER_EXCEPTION.value)
         if not path.find(".csv"):
             raise CensusAnalyserException(ExceptionType.INCORRECT_FILE_TYPE_EXCEPTION.value)
-        if delimiter == ',':
+        if delimiter != "\t":
             raise CensusAnalyserException(ExceptionType.INCORRECT_DELIMITER_EXCEPTION.value)
         try:
             self.stateCensusData = pd.read_csv(path, sep=delimiter, skiprows=[0], names=header)
@@ -36,6 +36,8 @@ class CensusAnalyser:
             header = repr(StateCodeCSVHeader()).split(',')
         if not path.find(".csv"):
             raise CensusAnalyserException(ExceptionType.INCORRECT_FILE_TYPE_EXCEPTION.value)
+        if delimiter != "\t":
+            raise CensusAnalyserException(ExceptionType.INCORRECT_DELIMITER_EXCEPTION.value)
         try:
             self.stateCodaData = pd.read_csv(path, sep=delimiter, skiprows=[0], names=header)
         except FileNotFoundError:
