@@ -4,6 +4,8 @@ import pytest
 
 STATE_CENSUS_ACTUAL_PATH = r"C:\Users\User\PycharmProjects\CensusAnalyserProblem\com\bridgelabz\Resource\stateCensusData.csv"
 STATE_CENSUS_INCORRECT_TYPE_PATH = r"C:\Users\User\PycharmProjects\CensusAnalyserProblem\com\bridgelabz\Resource\stateCensusData.xls"
+STATE_CODE_ACTUAL_PATH = r"C:\Users\User\PycharmProjects\CensusAnalyserProblem\com\bridgelabz\Resource\stateCodeData.csv"
+STATE_CODE_INCORRECT_TYPE_PATH = r"C:\Users\User\PycharmProjects\CensusAnalyserProblem\com\bridgelabz\Resource\stateCodeData.xls"
 WRONG_PATH = r"Problem\com\bridgelabz\Resource\stateCensusData.csv"
 WRONG_HEADER = ["A", "B", "C", "D"]
 
@@ -36,3 +38,7 @@ def test_givenStateCensusCSVFile_WhenWrongHeaderFound_ShouldRaiseCensusAnalyserE
     with pytest.raises(CensusAnalyserException):
         stateCensusInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH, header=WRONG_HEADER)
 
+
+def test_givenStateCodeCSVFile_WhenCounted_ShouldReturnRecordCount(stateCensusInstance):
+    stateCensusInstance.loadStateCodeData(STATE_CODE_ACTUAL_PATH)
+    assert stateCensusInstance.getStateCodeRecordCount() == 37
