@@ -9,6 +9,7 @@ STATE_CODE_INCORRECT_TYPE_PATH = r"C:\Users\User\PycharmProjects\CensusAnalyserP
 WRONG_PATH = r"Problem\com\bridgelabz\Resource\stateCensusData.csv"
 WRONG_HEADER = ["A", "B", "C", "D"]
 
+
 @pytest.fixture
 def stateCensusInstance():
     return CensusAnalyser()
@@ -47,3 +48,8 @@ def test_givenStateCodeCSVFile_WhenCounted_ShouldReturnRecordCount(stateCensusIn
 def test_givenStateCodeCSVFile_WhenWrongPath_ShouldRaiseCensusAnalyserException(stateCensusInstance):
     with pytest.raises(CensusAnalyserException):
         stateCensusInstance.loadStateCodeData(WRONG_PATH)
+
+
+def test_givenStateCodeFile_WhenIncorrectFileType_ShouldRaiseCensusAnalyserException(stateCensusInstance):
+    with pytest.raises(CensusAnalyserException):
+        stateCensusInstance.loadStateCodeData(STATE_CODE_INCORRECT_TYPE_PATH)

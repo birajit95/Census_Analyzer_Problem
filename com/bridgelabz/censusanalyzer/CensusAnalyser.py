@@ -34,11 +34,12 @@ class CensusAnalyser:
 
         if header is None:
             header = repr(StateCodeCSVHeader()).split(',')
+        if not path.find(".csv"):
+            raise CensusAnalyserException(ExceptionType.INCORRECT_FILE_TYPE_EXCEPTION.value)
         try:
             self.stateCodaData = pd.read_csv(path, sep=delimiter, skiprows=[0], names=header)
         except FileNotFoundError:
             raise CensusAnalyserException(ExceptionType.WRONG_FILE_PATH_EXCEPTION.value)
-
 
     def getStateCodeRecordCount(self):
         return len(self.stateCodaData)
