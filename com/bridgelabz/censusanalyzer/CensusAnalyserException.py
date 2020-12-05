@@ -3,6 +3,7 @@ import enum
 
 class ExceptionType(enum.Enum):
     WRONG_FILE_PATH_EXCEPTION = "Wrong file path has been given!"
+    INCORRECT_FILE_TYPE_EXCEPTION = "Incorrect file type is found!"
 
 
 class CensusAnalyserException(Exception):
