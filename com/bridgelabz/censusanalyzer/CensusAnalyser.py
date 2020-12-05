@@ -9,15 +9,21 @@ class CensusAnalyser:
         self.stateCensusData = None
 
     def loadStateCensusData(self, path, delimiter="\t"):
-        """Loading State census data set"""
+        """This function loads state census data and raise exceptions if found any error"""
 
         header = repr(CensusAnalyserCSVHeader()).split(',')
+
+        if not path.find(".csv"):
+            raise CensusAnalyserException(ExceptionType.INCORRECT_FILE_TYPE_EXCEPTION.value)
+        if delimiter == ',':
+            raise CensusAnalyserException(ExceptionType.INCORRECT_DELIMITER_EXCEPTION.value)
         try:
             self.stateCensusData = pd.read_csv(path, sep=delimiter, skiprows=[0], names=header)
         except FileNotFoundError:
             raise CensusAnalyserException(ExceptionType.WRONG_FILE_PATH_EXCEPTION.value)
 
     def getStateCensusRecordCount(self):
+        """returns length of the data set"""
         return len(self.stateCensusData)
 
 

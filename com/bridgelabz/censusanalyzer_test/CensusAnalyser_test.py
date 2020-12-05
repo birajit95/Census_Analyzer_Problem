@@ -24,3 +24,8 @@ def test_givenStateCensusCSVFile_WhenWrongPath_ShouldRaiseCensusAnalyserExceptio
 def test_givenStateCensusFile_WhenIncorrectFileType_ShouldRaiseCensusAnalyserException(stateCensusInstance):
     with pytest.raises(CensusAnalyserException):
         stateCensusInstance.loadStateCensusData(STATE_CENSUS_INCORRECT_TYPE_PATH)
+
+
+def test_givenStateCensusFile_WhenWrongDelimiter_ShouldRaiseCensusAnalyserException(stateCensusInstance):
+    with pytest.raises(CensusAnalyserException):
+        stateCensusInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH, delimiter=",")
