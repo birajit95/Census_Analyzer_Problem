@@ -8,11 +8,13 @@ class CensusAnalyser:
     def __init__(self):
         self.stateCensusData = None
 
-    def loadStateCensusData(self, path, delimiter="\t"):
+    def loadStateCensusData(self, path, delimiter="\t", header=None):
         """This function loads state census data and raise exceptions if found any error"""
 
-        header = repr(CensusAnalyserCSVHeader()).split(',')
-
+        if header is None:
+            header = repr(CensusAnalyserCSVHeader()).split(',')
+        elif header != repr(CensusAnalyserCSVHeader()).split(','):
+            raise CensusAnalyserException(ExceptionType.INCORRECT_HEADER_EXCEPTION.value)
         if not path.find(".csv"):
             raise CensusAnalyserException(ExceptionType.INCORRECT_FILE_TYPE_EXCEPTION.value)
         if delimiter == ',':

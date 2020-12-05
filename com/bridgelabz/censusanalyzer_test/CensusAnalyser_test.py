@@ -5,6 +5,7 @@ import pytest
 STATE_CENSUS_ACTUAL_PATH = r"C:\Users\User\PycharmProjects\CensusAnalyserProblem\com\bridgelabz\Resource\stateCensusData.csv"
 STATE_CENSUS_INCORRECT_TYPE_PATH = r"C:\Users\User\PycharmProjects\CensusAnalyserProblem\com\bridgelabz\Resource\stateCensusData.xls"
 WRONG_PATH = r"Problem\com\bridgelabz\Resource\stateCensusData.csv"
+WRONG_HEADER = ["A", "B", "C", "D"]
 
 @pytest.fixture
 def stateCensusInstance():
@@ -26,6 +27,12 @@ def test_givenStateCensusFile_WhenIncorrectFileType_ShouldRaiseCensusAnalyserExc
         stateCensusInstance.loadStateCensusData(STATE_CENSUS_INCORRECT_TYPE_PATH)
 
 
-def test_givenStateCensusFile_WhenWrongDelimiter_ShouldRaiseCensusAnalyserException(stateCensusInstance):
+def test_givenStateCensusCSVFile_WhenWrongDelimiter_ShouldRaiseCensusAnalyserException(stateCensusInstance):
     with pytest.raises(CensusAnalyserException):
         stateCensusInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH, delimiter=",")
+
+
+def test_givenStateCensusCSVFile_WhenWrongHeaderFound_ShouldRaiseCensusAnalyserException(stateCensusInstance):
+    with pytest.raises(CensusAnalyserException):
+        stateCensusInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH, header=WRONG_HEADER)
+
