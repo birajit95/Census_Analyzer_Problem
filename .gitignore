@@ -1,0 +1,7 @@
+.idea/
+main.py
+/__pycache__/
+com/bridgelabz/censusanalyzer/__pycache__/
+com/bridgelabz/__pycache__/
+com/__pycache__/
+com/bridgelabz/censusanalyzer_test/__pycache__/
