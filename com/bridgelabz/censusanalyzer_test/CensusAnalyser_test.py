@@ -11,55 +11,41 @@ WRONG_HEADER = ["A", "B", "C", "D"]
 
 
 @pytest.fixture
-def stateCensusInstance():
+def censusAnalyserInstance():
     return CensusAnalyser()
 
 
-def test_givenStateCensusCSVFile_WhenCounted_ShouldReturnRecordCount(stateCensusInstance):
-    stateCensusInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
-    assert stateCensusInstance.getStateCensusRecordCount() == 29
+def test_givenStateCensusCSVFile_WhenCounted_ShouldReturnRecordCount(censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    assert censusAnalyserInstance.getStateCensusRecordCount() == 29
 
 
-def test_givenStateCensusCSVFile_WhenWrongPath_ShouldRaiseCensusAnalyserException(stateCensusInstance):
-    with pytest.raises(CensusAnalyserException):
-        stateCensusInstance.loadStateCensusData(WRONG_PATH)
+@pytest.mark.parametrize("filePath,delimiter,header, expected", [
+    (WRONG_PATH, "\t", None, CensusAnalyserException),
+    (STATE_CENSUS_INCORRECT_TYPE_PATH, "\t", None, CensusAnalyserException),
+    (STATE_CENSUS_ACTUAL_PATH, ",", None, CensusAnalyserException),
+    (STATE_CENSUS_ACTUAL_PATH, "\t", WRONG_HEADER, CensusAnalyserException),
+
+])
+def test_StateCensusCSVFile_WhenGiven_CSVLoader_ShouldMeetExpectation(censusAnalyserInstance, filePath, delimiter,
+                                                                      header, expected):
+    with pytest.raises(expected):
+        censusAnalyserInstance.loadStateCensusData(path=filePath, delimiter=delimiter, header=header)
 
 
-def test_givenStateCensusFile_WhenIncorrectFileType_ShouldRaiseCensusAnalyserException(stateCensusInstance):
-    with pytest.raises(CensusAnalyserException):
-        stateCensusInstance.loadStateCensusData(STATE_CENSUS_INCORRECT_TYPE_PATH)
+def test_givenStateCodeCSVFile_WhenCounted_ShouldReturnRecordCount(censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCodeData(STATE_CODE_ACTUAL_PATH)
+    assert censusAnalyserInstance.getStateCodeRecordCount() == 37
 
 
-def test_givenStateCensusCSVFile_WhenWrongDelimiter_ShouldRaiseCensusAnalyserException(stateCensusInstance):
-    with pytest.raises(CensusAnalyserException):
-        stateCensusInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH, delimiter=",")
+@pytest.mark.parametrize("filePath,delimiter,header, expected", [
+    (WRONG_PATH, "\t", None, CensusAnalyserException),
+    (STATE_CODE_INCORRECT_TYPE_PATH, "\t", None, CensusAnalyserException),
+    (STATE_CODE_ACTUAL_PATH, ",", None, CensusAnalyserException),
+    (STATE_CODE_ACTUAL_PATH, "\t", WRONG_HEADER, CensusAnalyserException),
 
-
-def test_givenStateCensusCSVFile_WhenWrongHeaderFound_ShouldRaiseCensusAnalyserException(stateCensusInstance):
-    with pytest.raises(CensusAnalyserException):
-        stateCensusInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH, header=WRONG_HEADER)
-
-
-def test_givenStateCodeCSVFile_WhenCounted_ShouldReturnRecordCount(stateCensusInstance):
-    stateCensusInstance.loadStateCodeData(STATE_CODE_ACTUAL_PATH)
-    assert stateCensusInstance.getStateCodeRecordCount() == 37
-
-
-def test_givenStateCodeCSVFile_WhenWrongPath_ShouldRaiseCensusAnalyserException(stateCensusInstance):
-    with pytest.raises(CensusAnalyserException):
-        stateCensusInstance.loadStateCodeData(WRONG_PATH)
-
-
-def test_givenStateCodeFile_WhenIncorrectFileType_ShouldRaiseCensusAnalyserException(stateCensusInstance):
-    with pytest.raises(CensusAnalyserException):
-        stateCensusInstance.loadStateCodeData(STATE_CODE_INCORRECT_TYPE_PATH)
-
-
-def test_givenStateCodeCSVFile_WhenWrongDelimiter_ShouldRaiseCensusAnalyserException(stateCensusInstance):
-    with pytest.raises(CensusAnalyserException):
-        stateCensusInstance.loadStateCodeData(STATE_CODE_ACTUAL_PATH, delimiter=",")
-
-
-def test_givenStateCodeCSVFile_WhenWrongHeaderFound_ShouldRaiseCensusAnalyserException(stateCensusInstance):
-    with pytest.raises(CensusAnalyserException):
-        stateCensusInstance.loadStateCodeData(STATE_CODE_ACTUAL_PATH, header=WRONG_HEADER)
+])
+def test_StateCodeCSVFile_WhenGiven_CSVLoader_ShouldMeetExpectation(censusAnalyserInstance, filePath, delimiter, header,
+                                                                    expected):
+    with pytest.raises(expected):
+        censusAnalyserInstance.loadStateCensusData(path=filePath, delimiter=delimiter, header=header)
