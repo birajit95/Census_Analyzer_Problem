@@ -31,6 +31,13 @@ class CensusAnalyser:
                                                           "Density": int(data["Density"]), "Area": int(data["Area"])}
         return json.dumps(dataDict)
 
+    def sortCensusDataByStateCode(self):
+        sortedData = self.stateCodeData.sort_values(by="StateCode")
+        dataDict = {}
+        for i in range(0, len(sortedData)):
+            data = dict(sortedData.iloc(0)[i])
+            dataDict[(sortedData.iloc(0)[i])["State"]] = {"State Code": data["StateCode"], "TIN": int(data["TIN"])}
+        return json.dumps(dataDict)
 
 
 if __name__ == '__main__':
@@ -41,4 +48,4 @@ if __name__ == '__main__':
     analyser.loadStateCodeData(STATE_CODE_PATH)
     print(analyser.getStateCensusRecordCount())
     print(analyser.getStateCodeRecordCount())
-    print(analyser.sortCensusDataByStateName())
+    print(analyser.sortCensusDataByStateCode())
