@@ -48,4 +48,4 @@ if __name__ == '__main__':
     analyser.loadStateCodeData(STATE_CODE_PATH)
     print(analyser.getStateCensusRecordCount())
     print(analyser.getStateCodeRecordCount())
-    print(analyser.sortCensusDataByStateCode())
+    
