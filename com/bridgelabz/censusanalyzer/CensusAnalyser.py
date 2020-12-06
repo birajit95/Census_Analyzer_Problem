@@ -1,5 +1,5 @@
 from com.bridgelabz.censusanalyzer.CSVLoader import CSVLoader
-
+import json
 
 class CensusAnalyser:
     def __init__(self):
@@ -22,12 +22,23 @@ class CensusAnalyser:
         """returns length of the data set"""
         return len(self.stateCodeData)
 
-#
-# if __name__ == '__main__':
-#     STATE_CENSUS_PATH = r"..\Resource\stateCensusData.csv"
-#     STATE_CODE_PATH = r"..\Resource\stateCodeData.csv"
-#     analyser = CensusAnalyser()
-#     analyser.loadStateCensusData(STATE_CENSUS_PATH)
-#     analyser.loadStateCodeData(STATE_CODE_PATH)
-#     print(analyser.getStateCensusRecordCount())
-#     print(analyser.getStateCodeRecordCount())
+    def sortCensusDataByStateName(self):
+        sortedData = self.stateCensusData.sort_values(by="State")
+        dataDict = {}
+        for i in range(0, len(sortedData)):
+            data = dict(sortedData.iloc(0)[i])
+            dataDict[(sortedData.iloc(0)[i])["State"]] = {"Population": int(data["Population"]),
+                                                          "Density": int(data["Density"]), "Area": int(data["Area"])}
+        return json.dumps(dataDict)
+
+
+
+if __name__ == '__main__':
+    STATE_CENSUS_PATH = r"..\Resource\stateCensusData.csv"
+    STATE_CODE_PATH = r"..\Resource\stateCodeData.csv"
+    analyser = CensusAnalyser()
+    analyser.loadStateCensusData(STATE_CENSUS_PATH)
+    analyser.loadStateCodeData(STATE_CODE_PATH)
+    print(analyser.getStateCensusRecordCount())
+    print(analyser.getStateCodeRecordCount())
+    print(analyser.sortCensusDataByStateName())
