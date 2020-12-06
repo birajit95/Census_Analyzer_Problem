@@ -2,9 +2,10 @@ import pandas as pd
 from com.bridgelabz.censusanalyzer.CensusAnalyserCSVHeader import StateCensusCSVHeader, StateCodeCSVHeader
 from com.bridgelabz.censusanalyzer.CensusAnalyserException import CensusAnalyserException
 from com.bridgelabz.censusanalyzer.CensusAnalyserException import ExceptionType
+from com.bridgelabz.censusanalyzer.CSVBuilder import CSVBuilder
 
 
-class CSVLoader:
+class CSVLoader(CSVBuilder):
 
     @staticmethod
     def genericCSVLoader(path, fileName, delimiter="\t", header=None):
