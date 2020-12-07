@@ -22,14 +22,19 @@ class CensusAnalyser:
         """returns length of the data set"""
         return len(self.stateCodeData)
 
-    def sortCensusDataByStateName(self):
-        sortedData = self.stateCensusData.sort_values(by="State")
+    def sortCensusDataByGivenColumn(self, columnName, ascending=True):
+        """This is a generic sorting function which sort the data based on given column and return in json fromat"""
+        sortedData = self.stateCensusData.sort_values(by=columnName, ascending=ascending)
         dataDict = {}
         for i in range(0, len(sortedData)):
             data = dict(sortedData.iloc(0)[i])
             dataDict[(sortedData.iloc(0)[i])["State"]] = {"Population": int(data["Population"]),
                                                           "Density": int(data["Density"]), "Area": int(data["Area"])}
         return json.dumps(dataDict)
+
+    def sortCensusDataByStateName(self):
+        """Returns census data in json format sorted by State Name"""
+        return self.sortCensusDataByGivenColumn(columnName="State")
 
     def sortCensusDataByStateCode(self):
         sortedData = self.stateCodeData.sort_values(by="StateCode")
@@ -48,4 +53,4 @@ if __name__ == '__main__':
     analyser.loadStateCodeData(STATE_CODE_PATH)
     print(analyser.getStateCensusRecordCount())
     print(analyser.getStateCodeRecordCount())
-    
+    print(analyser.sortCensusDataByStateName())
