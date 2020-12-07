@@ -109,3 +109,44 @@ def test_givenStateCensusCSVFile_WhenSortedByStateCode_LastStateCode_ShouldNot_B
     for state in dataList:
         if state["State Code"] != "WB":
             assert dataList[-1]["State Code"] != state["State Code"]
+
+
+# Test cases for sorted by population
+
+
+def test_givenStateCensusCSV_WhenSortedByPopulation_ShouldMatchTheCountOfSortedState(censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    assert len(json.loads(censusAnalyserInstance.sortCensusDataByPopulation())) == 29
+
+
+def test_givenStateCensusCSV_WhenSortedByPopulation_ShouldMatchThePopulationCount(censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    assert list(json.loads(censusAnalyserInstance.sortCensusDataByPopulation()).values())[0]["Population"] == 199812341
+
+
+def test_givenStateCensusCSV_WhenSortedByPopulation_ShouldMatchTheExactFirstStateName(censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    assert list(json.loads(censusAnalyserInstance.sortCensusDataByPopulation()))[0] == "Uttar Pradesh"
+
+
+def test_givenStateCensusCSV_WhenSortedByPopulation_ShouldMatchTheExactLastStateName(censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    assert list(json.loads(censusAnalyserInstance.sortCensusDataByPopulation()))[-1] == "Sikkim"
+
+
+def test_givenStateCensusCSVFile_WhenSortedByPopulation_FirstStateName_ShouldNot_BeAnaOtherThenExpectation(
+        censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    dataList = list(json.loads(censusAnalyserInstance.sortCensusDataByPopulation()))
+    for state in dataList:
+        if state != "Uttar Pradesh":
+            assert dataList[0] != state
+
+
+def test_givenStateCensusCSVFile_WhenSortedByPopulation_LastStateName_ShouldNot_BeAnaOtherThenExpectation(
+        censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    dataList = list(json.loads(censusAnalyserInstance.sortCensusDataByPopulation()))
+    for state in dataList:
+        if state != "Sikkim":
+            assert dataList[-1] != state
