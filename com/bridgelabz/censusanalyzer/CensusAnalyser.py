@@ -44,6 +44,10 @@ class CensusAnalyser:
         """Returns census data in json format sorted by Population Density in reverse order"""
         return self.sortCensusDataByGivenColumn(columnName="Density", ascending=False)
 
+    def sortCensusDataByArea(self):
+        """Returns census data in json format sorted by Population Density in reverse order"""
+        return self.sortCensusDataByGivenColumn(columnName="Area", ascending=False)
+
     def sortCensusDataByStateCode(self):
         """Return State code census data in json format sorted by state code"""
         sortedData = self.stateCodeData.sort_values(by="StateCode")
@@ -54,12 +58,12 @@ class CensusAnalyser:
         return json.dumps(dataDict)
 
 
-if __name__ == '__main__':
-    STATE_CENSUS_PATH = r"..\Resource\stateCensusData.csv"
-    STATE_CODE_PATH = r"..\Resource\stateCodeData.csv"
-    analyser = CensusAnalyser()
-    analyser.loadStateCensusData(STATE_CENSUS_PATH)
-    analyser.loadStateCodeData(STATE_CODE_PATH)
-    # print(analyser.getStateCensusRecordCount())
-    # print(analyser.getStateCodeRecordCount())
-    print(analyser.sortCensusDataByPopulationDensity())
+# if __name__ == '__main__':
+#     STATE_CENSUS_PATH = r"..\Resource\stateCensusData.csv"
+#     STATE_CODE_PATH = r"..\Resource\stateCodeData.csv"
+#     analyser = CensusAnalyser()
+#     analyser.loadStateCensusData(STATE_CENSUS_PATH)
+#     analyser.loadStateCodeData(STATE_CODE_PATH)
+#     # print(analyser.getStateCensusRecordCount())
+#     # print(analyser.getStateCodeRecordCount())
+#     print(analyser.sortCensusDataByArea())
