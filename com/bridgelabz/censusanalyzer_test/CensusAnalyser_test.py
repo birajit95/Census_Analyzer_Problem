@@ -192,3 +192,42 @@ def test_givenStateCensusCSVFile_WhenSortedByPopulationDensity_LastStateName_Sho
         if state != "Arunachal Pradesh":
             assert dataList[-1] != state
 
+# Test Cases for sorting by Area
+
+
+def test_givenStateCensusCSV_WhenSortedByArea_ShouldMatchTheCountOfSortedState(censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    assert len(json.loads(censusAnalyserInstance.sortCensusDataByArea())) == 29
+
+
+def test_givenStateCensusCSV_WhenSortedByArea_ShouldMatchThePopulationDensity(censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    assert list(json.loads(censusAnalyserInstance.sortCensusDataByArea()).values())[0]["Area"] == 342239
+
+
+def test_givenStateCensusCSV_WhenSortedByArea_ShouldMatchTheExactFirstStateName(censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    assert list(json.loads(censusAnalyserInstance.sortCensusDataByArea()))[0] == "Rajasthan"
+
+
+def test_givenStateCensusCSV_WhenSortedByArea_ShouldMatchTheExactLastStateName(censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    assert list(json.loads(censusAnalyserInstance.sortCensusDataByArea()))[-1] == "Goa"
+
+
+def test_givenStateCensusCSVFile_WhenSortedByArea_FirstStateName_ShouldNot_BeAnaOtherThenExpectation(
+        censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    dataList = list(json.loads(censusAnalyserInstance.sortCensusDataByArea()))
+    for state in dataList:
+        if state != "Rajasthan":
+            assert dataList[0] != state
+
+
+def test_givenStateCensusCSVFile_WhenSortedByArea_LastStateName_ShouldNot_BeAnaOtherThenExpectation(
+        censusAnalyserInstance):
+    censusAnalyserInstance.loadStateCensusData(STATE_CENSUS_ACTUAL_PATH)
+    dataList = list(json.loads(censusAnalyserInstance.sortCensusDataByArea()))
+    for state in dataList:
+        if state != "Goa":
+            assert dataList[-1] != state
