@@ -5,3 +5,6 @@ com/bridgelabz/censusanalyzer/__pycache__/
 com/bridgelabz/__pycache__/
 com/__pycache__/
 com/bridgelabz/censusanalyzer_test/__pycache__/
+__pycache__/
+.pytest_cache/
+.idea/
